@@ -11,10 +11,6 @@ module.exports = function (sequelize, DataTypes) {
 		user_id: {
 			type: DataTypes.INTEGER(11),
 			allowNull: false,
-			references: {
-				model: 'user_detail',
-				key: 'id'
-			}
 		},
 		task: {
 			type: DataTypes.STRING(45),
@@ -22,37 +18,35 @@ module.exports = function (sequelize, DataTypes) {
 		},
 		due_date: {
 			type: DataTypes.DATEONLY,
-			allowNull: false
+			allowNull: true
 		},
 		status: {
-			type: DataTypes.INTEGER(11),
+			type: DataTypes.INTEGER(11).UNSIGNED,
 			allowNull: false,
 			defaultValue: '0'
 		},
 		priority: {
 			type: DataTypes.INTEGER(11),
-			allowNull: false,
+			allowNull: true,
 			defaultValue: '1'
 		},
 		timestamp_create: {
 			type: DataTypes.DATE,
-			allowNull: false,
+			allowNull: true,
 			defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 		},
 		timestamp_update: {
 			type: DataTypes.DATE,
-			allowNull: false,
+			allowNull: true,
 			defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 		}
 	}, {
-		timestamps: false,
-		tableName: 'todos'
+		tableName: 'todos',
+		timestamps: false
 	});
 
 	Todos.associate = models => {
-		Todos.belongsTo(models.user_detail, {
-			foreignKey: 'user_id'
-		});
+		Todos.belongsTo(models.user_detail, {foreignKey: 'user_id'})
 	}
 
 	return Todos;

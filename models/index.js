@@ -13,7 +13,7 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 fs
     .readdirSync(__dirname)
     .filter(file => {
-        console.log(file);
+        // console.log(file);
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
     .forEach(file => {
@@ -23,16 +23,18 @@ fs
 
 Object.keys(db).forEach(modelName => {
     if (db[modelName].associate) {
-        console.log(db[modelName].associate)
+        // console.log(db[modelName].associate)
         db[modelName].associate(db);
     }
 });
 
-sequelize.sync({force: true}).then(res => {
-    console.log(res);
+// sequelize.sync({
+//     force: true
+// }).then(res => {
+    // console.log(res);
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;
-});
+// });
 
 
 module.exports = db;

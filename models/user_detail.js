@@ -36,20 +36,20 @@ module.exports = function (sequelize, DataTypes) {
 		timestamp_create: {
 			type: DataTypes.DATE,
 			allowNull: true,
-			// defaultValue: DataTypes.DATE.NOW
+			defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 		},
 		timestamp_update: {
 			type: DataTypes.DATE,
 			allowNull: true,
-			// defaultValue: DataTypes.DATE.NOW
+			defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
 		}
 	}, {
-		timestamps: false,
-		tableName: 'user_detail'
+		tableName: 'user_detail',
+		timestamps: false
 	});
 
 	UserDetail.associate = models => {
-		UserDetail.hasMany(models.todos);
+		UserDetail.hasMany(models.todos, {foreignKey: 'user_id', constraints: false});
 	}
 
 	return UserDetail;
